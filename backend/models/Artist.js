@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Album from './Album';
 
 const artistSchema = new mongoose.Schema(
   {

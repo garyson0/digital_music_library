@@ -8,4 +8,4 @@ const songSchema = new mongoose.Schema(
     { timestamps: true }
   );
 
-export default songSchema;
+  export default mongoose.model("Song", songSchema);
