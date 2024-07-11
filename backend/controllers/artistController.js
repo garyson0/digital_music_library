@@ -1,5 +1,4 @@
-import Artist from "../models/Artist";
-
+import Artist from "../models/Artist.js";
 
 export const getAllArtists = async (req, res) => {
     try {
