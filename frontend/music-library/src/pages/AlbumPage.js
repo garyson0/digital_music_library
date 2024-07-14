@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Button, Grid } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import AlbumList from "../components/AlbumList";
-import { getAlbumsByArtistId } from "../services/api";
+import { getAlbumsByArtistId, getArtistById } from "../services/api";
 
 const AlbumPage = () => {
   const { artistId } = useParams();
+  const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState([]);
   const [expandedAlbum, setExpandedAlbum] = useState(null);
 
@@ -20,7 +21,18 @@ const AlbumPage = () => {
         console.error("Error fetching albums:", error);
       }
     };
+
+    const fetchArtist = async () => {
+        try {
+            const data = await getArtistById(artistId);
+            setArtist(data);
+          } catch (error) {
+            console.error("Error fetching artist:", error);
+          }
+    }
+
     fetchAlbums();
+    fetchArtist();
   }, [artistId]);
 
   const handleBackClick = () => {
@@ -71,7 +83,7 @@ const AlbumPage = () => {
               color: "#FFB100",
             }}
           >
-            Albums
+            Albums of {artist?.name}
           </Typography>
         </Grid>
       </Grid>
