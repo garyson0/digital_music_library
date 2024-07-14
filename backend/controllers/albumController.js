@@ -4,14 +4,14 @@ import Song from "../models/Song.js";
 export const getAlbumsByArtistId = async (req, res) => {
   try {
     const artist = await Artist.findById(req.params.artistId).populate({
-      path: 'albums',
+      path: "albums",
       populate: {
-        path: 'songs'
-      }
+        path: "songs",
+      },
     });
 
     if (!artist) {
-      return res.status(404).json({ message: 'Artist not found' });
+      return res.status(404).json({ message: "Artist not found" });
     }
 
     const albums = artist.albums;
