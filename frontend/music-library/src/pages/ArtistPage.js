@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
 import { getArtists } from "../services/api";
 import ArtistList from "../components/ArtistList";
+import { useNavigate } from "react-router-dom";
 
 const ArtistsPage = () => {
   const [artists, setArtists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -13,6 +15,10 @@ const ArtistsPage = () => {
     };
     fetchArtists();
   }, []);
+
+  const handleArtistClick = (artistId) => {
+    navigate(`/artists/${artistId}/albums`);
+  };
 
   return (
     <Container
@@ -39,7 +45,7 @@ const ArtistsPage = () => {
       >
         Artists
       </Typography>
-      <ArtistList artists={artists} />
+      <ArtistList artists={artists} onArtistClick={handleArtistClick}/>
     </Container>
   );
 };

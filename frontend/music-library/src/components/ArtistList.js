@@ -2,7 +2,7 @@ import React from "react";
 import { List, ListItem, Paper, Typography, Container, ListItemIcon } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 
-const ArtistList = ({ artists }) => {
+const ArtistList = ({ artists, onArtistClick  }) => {
   return (
     <Container sx={{ padding: '2rem', backgroundColor: '#000'}}>
       <Paper
@@ -16,6 +16,7 @@ const ArtistList = ({ artists }) => {
           {artists.map((artist) => (
             <ListItem
               key={artist._id}
+              onClick={() => onArtistClick(artist._id)}
               sx={{
                 margin: '10px 0',
                 padding: '20px',
