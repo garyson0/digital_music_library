@@ -1,8 +1,17 @@
 import React from "react";
-import { List, ListItem, ListItemIcon, ListItemText, IconButton } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Collapse,
+  Typography,
+} from "@mui/material";
 import AlbumIcon from "@mui/icons-material/Album";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/system";
+import SongList from "./SongsList";
 
 const StyledList = styled(List)({
   backgroundColor: "#242a30",
@@ -31,19 +40,46 @@ const expandIconStyles = {
   marginLeft: "auto",
 };
 
-const AlbumList = ({ albums, onAlbumClick }) => {
+const AlbumList = ({ albums, onAlbumClick, expandedAlbum }) => {
   return (
     <StyledList>
       {albums.map((album) => (
-        <StyledListItem button key={album._id} onClick={() => onAlbumClick(album._id)}>
-          <ListItemIcon>
-            <AlbumIcon style={iconStyles} />
-          </ListItemIcon>
-          <ListItemText primary={album.title} />
-          <IconButton edge="end" style={expandIconStyles}>
-            <ExpandMoreIcon style={iconStyles} />
-          </IconButton>
-        </StyledListItem>
+        <div key={album._id}>
+          <StyledListItem
+            key={album._id}
+            onClick={() => onAlbumClick(album._id)}
+          >
+            <ListItemIcon>
+              <AlbumIcon style={iconStyles} />
+            </ListItemIcon>
+            <ListItemText primary={album.title} />
+            <IconButton edge="end" style={expandIconStyles}>
+              <ExpandMoreIcon style={iconStyles} />
+            </IconButton>
+          </StyledListItem>
+
+          <Collapse
+            in={expandedAlbum === album._id}
+            timeout="auto"
+            unmountOnExit
+          >
+            <p>
+              {album.description}
+            </p>
+            <Typography
+              variant="h1"
+              gutterBottom
+              style={{
+                fontWeight: "bold",
+                fontSize: "1rem",
+                color: "#FFB100",
+              }}
+            >
+              Songs in the album
+            </Typography>
+            <SongList songs={album.songs} />
+          </Collapse>
+        </div>
       ))}
     </StyledList>
   );
