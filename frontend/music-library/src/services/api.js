@@ -17,3 +17,8 @@ export const getSongsByAlbumId = async (albumId) => {
     const response = await axios.get(`${API_BASE_URL}/songs/album/${albumId}`);
     return response.data;
 };
+
+export const getArtistById = async (artistId) => {
+    const response = await axios.get(`${API_BASE_URL}/artists/${artistId}`);
+    return response.data;
+};
