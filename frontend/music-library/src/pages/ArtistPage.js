@@ -36,7 +36,6 @@ const ArtistsPage = () => {
 
   return (
     <Container
-      maxWidth="lg"
       style={{
         backgroundColor: "black",
         padding: "20px",
@@ -49,7 +48,6 @@ const ArtistsPage = () => {
       <Typography
         variant="h4"
         align="center"
-        gutterBottom
         style={{
           fontWeight: "italic",
           letterSpacing: "10px",

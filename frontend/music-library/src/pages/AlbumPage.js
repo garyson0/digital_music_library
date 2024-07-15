@@ -45,7 +45,6 @@ const AlbumPage = () => {
 
   return (
     <Container
-      maxWidth="lg"
       style={{
         backgroundColor: "black",
         padding: "20px",
@@ -75,7 +74,6 @@ const AlbumPage = () => {
           <Typography
             variant="h4"
             align="center"
-            gutterBottom
             style={{
               fontWeight: "italic",
               letterSpacing: "10px",
