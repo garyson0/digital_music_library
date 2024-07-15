@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { TextField, Autocomplete, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { searchByQuery } from "../services/api";
+import { searchArtistsByQuery } from "../services/api";
 
 const Search = ({ onSearch }) => {
-    const [searchValue, setSearchValue] = useState("");
     const [options, setOptions] = useState([]);
     const navigate = useNavigate();
 
     const handleInputChange = async (event) => {
         const value = event.target.value;
-        setSearchValue(value);
 
         if (value) {
             try {
@@ -18,7 +16,7 @@ const Search = ({ onSearch }) => {
                 setOptions(response);
                 onSearch(value);
             } catch (err) {
-                setError(err.message);
+                console.error("Error while searching for artists:",err);
             }
         } else {
             setOptions([]);
