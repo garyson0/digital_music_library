@@ -71,4 +71,4 @@ To extend this project, you can:
 
 ## Video Demo
 
-[Video Demo Link](#)
+[Video Demo Link](#https://www.youtube.com/watch?v=742fmLG4Rmo)
