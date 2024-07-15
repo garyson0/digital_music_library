@@ -4,11 +4,7 @@
 
 This project is a digital music library that allows users to browse artists,their albums, and songs with a responsive and visually appealing interface.
 
-## Getting Started
-
-Follow these instructions to get a copy of the project running on your local machine.
-
-### Prerequisites
+### Needed
 
 - Node.js and npm installed
 - MongoDB installed and running
