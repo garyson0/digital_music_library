@@ -1,7 +1,7 @@
 import Artist from "../models/Artist.js";
 import Song from "../models/Song.js";
 
-export const getAlbumsByArtistId = async (req, res) => {
+export const getAlbumsByArtistId = async (req, res, next) => {
   try {
     const artist = await Artist.findById(req.params.artistId).populate({
       path: "albums",
@@ -11,12 +11,16 @@ export const getAlbumsByArtistId = async (req, res) => {
     });
 
     if (!artist) {
-      return res.status(404).json({ message: "Artist not found" });
+      const error = new Error(
+        "Artist not found while searching for his albums!"
+      );
+      error.statusCode = 404;
+      throw error;
     }
 
     const albums = artist.albums;
     res.json(albums);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
