@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Button, Grid } from "@mui/material";
+import { Container, Typography, Button, Grid, CircularProgress, Alert } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import AlbumList from "../components/AlbumList";
 import { getAlbumsByArtistId, getArtistById } from "../services/api";
@@ -9,6 +9,8 @@ const AlbumPage = () => {
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState([]);
   const [expandedAlbum, setExpandedAlbum] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -17,19 +19,23 @@ const AlbumPage = () => {
       try {
         const data = await getAlbumsByArtistId(artistId);
         setAlbums(data);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching albums:", error);
+        setError(error.message);
+        setLoading(false);
       }
     };
 
     const fetchArtist = async () => {
-        try {
-            const data = await getArtistById(artistId);
-            setArtist(data);
-          } catch (error) {
-            console.error("Error fetching artist:", error);
-          }
-    }
+      try {
+        const data = await getArtistById(artistId);
+        setArtist(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
 
     fetchAlbums();
     fetchArtist();
@@ -42,6 +48,9 @@ const AlbumPage = () => {
   const handleAlbumClick = (albumId) => {
     setExpandedAlbum(expandedAlbum === albumId ? null : albumId);
   };
+
+  if (loading) return <CircularProgress />;
+  if (error) return <Alert severity="error"> {error} </Alert>;
 
   return (
     <Container
