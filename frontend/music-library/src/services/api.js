@@ -1,29 +1,68 @@
-import axios from 'axios';
+import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://localhost:5000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-const API_BASE_URL = 'http://localhost:5000/api';
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API call error:", error);
+    return Promise.reject(
+      error.response ? error.response.data : { message: "Network Error" }
+    );
+  }
+);
 
 export const getArtists = async () => {
-    const response = await axios.get(`${API_BASE_URL}/artists`);
+  try {
+    const response = await api.get(`/artists`);
     return response.data;
+  } catch (error) {
+    console.error("Error in getArtists: ", error.message);
+    throw error;
+  }
 };
 
 export const getAlbumsByArtistId = async (artistId) => {
-    const response = await axios.get(`${API_BASE_URL}/albums/${artistId}`);
+  try {
+    const response = await api.get(`/albums/${artistId}`);
     return response.data;
+  } catch (error) {
+    console.error("Error in getAlbumsByArtistId:", error.message);
+    throw error;
+  }
 };
 
 export const getSongsByAlbumId = async (albumId) => {
-    const response = await axios.get(`${API_BASE_URL}/songs/album/${albumId}`);
+  try {
+    const response = await api.get(`/albums/${albumId}/songs`);
     return response.data;
+  } catch (error) {
+    console.error("Error in getSongsByAlbumId:", error.message);
+    throw error;
+  }
 };
 
 export const getArtistById = async (artistId) => {
-    const response = await axios.get(`${API_BASE_URL}/artists/${artistId}`);
+  try {
+    const response = await api.get(`/artists/${artistId}`);
     return response.data;
+  } catch (error) {
+    console.error("Error in getArtistById:", error.message);
+    throw error;
+  }
 };
 
 export const searchArtistsByQuery = async (query) => {
-    const response = await axios.get(`${API_BASE_URL}/search?query=${query}`);
+  try {
+    const response = await api.get(`/search?query=${query}`);
     return response.data;
+  } catch (error) {
+    console.error("Error in searchByQuery:", error.message);
+    throw error;
+  }
 };

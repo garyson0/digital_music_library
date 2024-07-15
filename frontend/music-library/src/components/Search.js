@@ -5,6 +5,7 @@ import { searchArtistsByQuery } from "../services/api";
 
 const Search = ({ onSearch }) => {
   const [options, setOptions] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleInputChange = async (event) => {
@@ -15,8 +16,9 @@ const Search = ({ onSearch }) => {
         const response = await searchArtistsByQuery(value);
         setOptions(response);
         onSearch(value);
-      } catch (err) {
-        console.error("Error while searching for artists:", err);
+        setError(null);
+      } catch (error) {
+        setError(error.message);
       }
     } else {
       setOptions([]);
@@ -59,6 +61,7 @@ const Search = ({ onSearch }) => {
         )}
         onChange={handleOptionSelect}
       />
+      {error && <div style={{ color: "red" }}>{error}</div>}
     </Paper>
   );
 };
