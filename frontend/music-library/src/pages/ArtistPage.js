@@ -3,9 +3,12 @@ import { Container, Typography } from "@mui/material";
 import { getArtists } from "../services/api";
 import ArtistList from "../components/ArtistList";
 import { useNavigate } from "react-router-dom";
+import Search from "../components/Search";
+import { searchArtistsByQuery } from "../services/api";
 
 const ArtistsPage = () => {
   const [artists, setArtists] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +22,17 @@ const ArtistsPage = () => {
   const handleArtistClick = (artistId) => {
     navigate(`/artists/${artistId}/albums`);
   };
+
+  const handleSearch = async (query) => {
+    try {
+      const searchRes = await searchArtistsByQuery(query);
+      setSearchResults(searchRes);
+    } catch (err) {
+      console.error("Error in setting search results: ",err);
+    }
+  }
+
+  const artistsToDisplay = searchResults.length <= 0 ? artists : searchResults;
 
   return (
     <Container
@@ -45,7 +59,8 @@ const ArtistsPage = () => {
       >
         Artists
       </Typography>
-      <ArtistList artists={artists} onArtistClick={handleArtistClick}/>
+      <Search onSearch={handleSearch}/>
+      <ArtistList artists={artistsToDisplay} onArtistClick={handleArtistClick}/>
     </Container>
   );
 };

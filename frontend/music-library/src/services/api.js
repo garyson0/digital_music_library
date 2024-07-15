@@ -22,3 +22,8 @@ export const getArtistById = async (artistId) => {
     const response = await axios.get(`${API_BASE_URL}/artists/${artistId}`);
     return response.data;
 };
+
+export const searchArtistsByQuery = async (query) => {
+    const response = await axios.get(`${API_BASE_URL}/search?query=${query}`);
+    return response.data;
+};
