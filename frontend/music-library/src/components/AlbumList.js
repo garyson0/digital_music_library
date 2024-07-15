@@ -63,12 +63,9 @@ const AlbumList = ({ albums, onAlbumClick, expandedAlbum }) => {
             timeout="auto"
             unmountOnExit
           >
-            <p>
-              {album.description}
-            </p>
+            <p>{album.description}</p>
             <Typography
               variant="h1"
-              gutterBottom
               style={{
                 fontWeight: "bold",
                 fontSize: "1rem",
